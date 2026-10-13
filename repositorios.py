@@ -1,5 +1,5 @@
 from modelos import *
-# from conexiones import conexion
+from conexiones import conexion
 
 
 class RegistroDAO:

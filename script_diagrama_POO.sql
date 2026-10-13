@@ -1,17 +1,13 @@
 
-
 DROP SCHEMA IF EXISTS `gestion_empleados`;
+
 CREATE SCHEMA `gestion_empleados`
     DEFAULT CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
 USE `gestion_empleados`;
 
--- ------------------------------------------------------------
--- Tabla: departamento
--- (la columna "gerente" del UML se resuelve con una FK a gerente;
---  la lista "empleados" se resuelve con empleado.departamento_id)
--- ------------------------------------------------------------
+
 CREATE TABLE `departamento` (
     `id`          INT          NOT NULL AUTO_INCREMENT,
     `nombre`      VARCHAR(100) NOT NULL,
@@ -21,10 +17,7 @@ CREATE TABLE `departamento` (
     KEY `idx_departamento_gerente` (`gerente_id`)
 ) ENGINE = InnoDB;
 
--- ------------------------------------------------------------
--- Tabla: empleado
--- Relación: Departamento 1 --- 0..* Empleado (agregación)
--- ------------------------------------------------------------
+
 CREATE TABLE `empleado` (
     `id`                     INT           NOT NULL AUTO_INCREMENT,
     `nombre`                 VARCHAR(100)  NOT NULL,
@@ -43,10 +36,7 @@ CREATE TABLE `empleado` (
         ON DELETE RESTRICT
 ) ENGINE = InnoDB;
 
--- ------------------------------------------------------------
--- Tabla: gerente
--- Generalización: Gerente hereda de Empleado (mismo id)
--- ------------------------------------------------------------
+
 CREATE TABLE `gerente` (
     `empleado_id`          INT NOT NULL,
     `presupuesto_asignado` INT NOT NULL DEFAULT 0,
@@ -58,17 +48,13 @@ CREATE TABLE `gerente` (
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
--- FK diferida: Gerente "Se encarga de" Departamento
--- (se agrega después para evitar la dependencia circular)
 ALTER TABLE `departamento`
     ADD CONSTRAINT `fk_departamento_gerente`
         FOREIGN KEY (`gerente_id`) REFERENCES `gerente` (`empleado_id`)
         ON UPDATE CASCADE
         ON DELETE SET NULL;
 
--- ------------------------------------------------------------
--- Tabla: proyecto
--- ------------------------------------------------------------
+
 CREATE TABLE `proyecto` (
     `id`            INT          NOT NULL AUTO_INCREMENT,
     `nombre`        VARCHAR(100) NOT NULL,
@@ -77,10 +63,7 @@ CREATE TABLE `proyecto` (
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
--- ------------------------------------------------------------
--- Tabla intermedia: empleado_proyecto
--- Relación "Son asignados": Empleado 1..* --- 1..* Proyecto (N:M)
--- ------------------------------------------------------------
+
 CREATE TABLE `empleado_proyecto` (
     `empleado_id` INT NOT NULL,
     `proyecto_id` INT NOT NULL,
@@ -96,11 +79,7 @@ CREATE TABLE `empleado_proyecto` (
         ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
--- ------------------------------------------------------------
--- Tabla: registro_tiempo
--- Empleado 1 --- 0..* RegistroTiempo  ("Registra")
--- Proyecto 1 --- 0..* RegistroTiempo  ("Se asocia a")
--- ------------------------------------------------------------
+
 CREATE TABLE `registro_tiempo` (
     `id`                INT          NOT NULL AUTO_INCREMENT,
     `fecha`             DATETIME     NOT NULL,
@@ -121,9 +100,3 @@ CREATE TABLE `registro_tiempo` (
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 ) ENGINE = InnoDB;
-
--- ------------------------------------------------------------
--- Nota: la clase "ServicioInforme" del UML es una clase de servicio
--- (dependencia <<Usa>> hacia Empleado) sin datos persistentes,
--- por lo que no genera tabla. Se implementa en la capa de aplicación.
--- ------------------------------------------------------------
