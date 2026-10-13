@@ -1,13 +1,19 @@
-
+-- Failsafe por si ya existe el schema --
 DROP SCHEMA IF EXISTS `gestion_empleados`;
 
+-- Creación de schema --
 CREATE SCHEMA `gestion_empleados`
     DEFAULT CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
+-- Creación de usuario para conectar con programa (importante cambiar las credenciales) --
+CREATE USER 'admin_RRHH'@'localhost' IDENTIFIED BY 'AdminRRHH123';
+GRANT ALL PRIVILEGES ON sistema_gestion.* TO 'admin_RRHH'@'localhost';
+
+
 USE `gestion_empleados`;
 
-
+-- Creacion de tablas --
 CREATE TABLE `departamento` (
     `id`          INT          NOT NULL AUTO_INCREMENT,
     `nombre`      VARCHAR(100) NOT NULL,

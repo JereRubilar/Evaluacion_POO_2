@@ -21,7 +21,7 @@ Las principales funciones de este programa son las de manejar la organización d
 
 Además podemos ingresar tanto registros de tiempo de cada empleado como nominas de proyectos en los cuales estan actualmente trabajando.
 
-Todo esto se respalda en una base de datos SQL la cual debe ser configurada con las credenciales correcta en el archivo [.env](.env) para poder funcionar.
+Todo esto se respalda en una base de datos SQL la cual debe ser configurada con las credenciales correcta en el archivo [.env](.env) y en el script de sql [.sql](script_diagrama_POO.sql) para poder funcionar.
 
 ### UML del sistema
 
