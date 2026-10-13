@@ -12,12 +12,12 @@ class Empleado(ABC):
         self.fecha_inicio_contrato = fecha_inicio_contrato
         self.salario = salario
 
-        def validar(self):
-            if not self.nombre or "@" not in self.correo:
-                raise ValueError("nombre y correo válido son obligatorios.")
+    def validar(self):
+        if not self.nombre or "@" not in self.correo:
+            raise ValueError("nombre y correo válido son obligatorios.")
 
-        def registrar_horas():
-            pass
+    def registrar_horas(self):
+        pass
 
 class Gerente(Empleado):
 
@@ -30,14 +30,14 @@ class Gerente(Empleado):
 
 class Departamento(ABC):
 
-    def __init__(self, nombre, gerente, empleados, departamento_id = None):
-        self.departamento_id = departamento_id
+    def __init__(self, nombre, gerente, empleados, id = None):
+        self.id = id
         self.nombre = nombre
         self.gerente = gerente
         self.empleados = empleados
         
 
-    def asignar_empleado():
+    def asignar_empleado(self):
         pass
 
     def quitar_empleado():
@@ -48,11 +48,11 @@ class Departamento(ABC):
 
 class Proyecto(ABC):
 
-    def __init_(self, nombre, descripcion, fecha_inicio, empleados):
+    def __init__(self, nombre, descripcion, fecha_inicio, empleados):
         self.nombre = nombre
         self.descripcion= descripcion
         self.fecha_inicio = fecha_inicio
-        self.empleado = empleados
+        self.empleados = empleados
 
     def asignar_empleado():
         pass
@@ -62,7 +62,7 @@ class Proyecto(ABC):
 
 class RegistroTiempo(ABC):
 
-    def __init_(self, fecha, horas_trabajadas, descripcion, empleado, proyecto):
+    def __init__(self, fecha, horas_trabajadas, descripcion, empleado, proyecto):
         self.fecha = fecha
         self.horas_trabajadas = horas_trabajadas
         self.descripcion = descripcion
