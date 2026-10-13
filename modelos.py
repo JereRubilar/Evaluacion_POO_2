@@ -3,8 +3,8 @@ from decimal import Decimal
 
 class Empleado(ABC):
 
-    def __init__(self, nombre, direccion, telefono, correo, fecha_inicio_contrato, salario, id = None):
-        self.id = id
+    def __init__(self, nombre, direccion, telefono, correo, fecha_inicio_contrato, salario, empleado_id = None):
+        self.id = empleado_id
         self.nombre = nombre
         self.direccion = direccion
         self.telefono = telefono
@@ -25,20 +25,22 @@ class Gerente(Empleado):
         self.presupuesto_asignado = presupuesto_asignado
         self.nivel_autorizacion = nivel_autorizacion
 
-    def crear_departament():
+    def crear_departamento():
         pass
 
 class Departamento(ABC):
 
-    def __init__(self, nombre, gerente, empleados):
+    def __init__(self, nombre, gerente, empleados, departamento_id = None):
+        self.departamento_id = departamento_id
         self.nombre = nombre
         self.gerente = gerente
         self.empleados = empleados
+        
 
-    def asignar_empleados():
+    def asignar_empleado():
         pass
 
-    def quitar_empleados():
+    def quitar_empleado():
         pass
 
     def cambiar_empleado():

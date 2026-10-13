@@ -2,8 +2,7 @@ from datetime import datetime
 
 import mysql.connector
 from modelos import Empleado, Gerente, Proyecto, RegistroTiempo
-from repositorios import (DepartamentoRepositorio, EmpleadoRepositorio,
-                          ProyectoRepositorio, RegistroTiempoRepositorio)
+from repositorios import DepartamentoRepositorio, EmpleadoRepositorio, ProyectoRepositorio, RegistroTiempoRepositorio
 
 def entero(mensaje):
     try:
