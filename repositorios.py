@@ -42,8 +42,7 @@ class EmpleadoRepositorio:
 
     def listar(self):
         sql = """
-            SELECT e.id, e.nombre, e.direccion, e.telefono, e.correo, e.fecha_inicio_contrato, e.salario,
-            g.presupuesto_asignado, g.nivel_autorizacion
+            e.id, e.nombre, e.direccion, e.telefono, e.correo, e.fecha_inicio_contrato, e.salario, g.presupuesto_asignado, g.nivel_autorizacion
             FROM empleado e
             LEFT JOIN gerente g ON e.id = g.empleado_id
         """
@@ -67,6 +66,8 @@ class EmpleadoRepositorio:
         with conexion() as cn:
             cur = cn.cursor()
             try:
+                cur.execute("DELETE FROM registro_tiempo WHERE empleado_id = %s", (empleado_id,))
+                cur.execute("DELETE FROM empleado_proyecto WHERE empleado_id = %s", (empleado_id,))
                 cur.execute("DELETE FROM empleado WHERE id = %s", (empleado_id,))
                 cn.commit()
             except Exception as e:
@@ -154,7 +155,7 @@ class ProyectoRepositorio:
             try:
                 cur.execute("SELECT id, nombre, descripcion, fecha_inicio FROM proyecto")
                 filas = cur.fetchall()
-                return [Proyecto(f[1], f[2], f[3], [], f[0]) for f in filas]
+                return [Proyecto(f[1], f[2], f[3], empleados=[], id = f[0]) for f in filas]
             finally:
                 cur.close()
 
@@ -214,8 +215,8 @@ class RegistroTiempoRepositorio:
                     registro.fecha,
                     registro.horas_trabajadas,
                     registro.descripcion,
-                    registro.empleado,  # ID del empleado
-                    registro.proyecto   # ID del proyecto
+                    registro.empleado,
+                    registro.proyecto  
                 ))
                 cn.commit()
                 registro.id = cur.lastrowid

@@ -116,9 +116,17 @@ def listar_proyectos():
     if not proyectos:
         print("No hay proyectos registrados.")
     for proyecto in proyectos:
-        print(proyecto, "|", horas.total_horas_proyecto(proyecto.id), "h")
-        for empleado in repositorio.empleados_de(proyecto.id):
-            print("   -", empleado.nombre)
+        print(proyecto)
+        empleados_proyecto = repositorio.empleados_de(proyecto.id)
+        if empleados_proyecto:
+            print("   Empleados asignados:")
+            for empleado in empleados_proyecto:
+                print(f"   - {empleado.nombre}")
+        else:
+            print("   - Sin empleados asignados")
+
+        total_h = horas.total_horas_proyecto(proyecto.id)
+        print(f"\n   Total horas registradas: {total_h} horas")
 
 
 # Registros de tiempo
